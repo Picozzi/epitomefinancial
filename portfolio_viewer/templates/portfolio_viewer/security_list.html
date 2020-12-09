@@ -1,0 +1,33 @@
+{% extends "portfolio_viewer/profile_base.html" %}
+{% load static %}
+
+{% block profile_content %}
+  
+  <div class = "security-page">
+    <h3>Your Securities</h3>
+    <a class = "btn btn-secondary btn-sm mt-1 mb-2" href = "{% url 'security_create' %}">Create A New Security</a> 
+    {% for account in acc_list %}
+      <h4 class = "text-secondary mt-3">{{account.grouper}}</h4>
+      <div class="list-group">
+        {% for security in account.list %}
+          <a href="{% url 'security_detail' security.id %}" class="list-group-item list-group-item-action p-0 mt-1" style= "width:30%">
+
+            <div class="card p-1">
+              <div class="card-body p-1">
+                <h5 class="card-title">{{security.name}} <span class="badge bg-primary" style= "color:white">{{security.ticker_symbol}}</span></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Number of Shares Held: {{security.num_shares}}</h6>
+                <small class="card-text">Security Type: {{security.security_type}}</small>
+                <br>
+                <small class="card-text">Purchase Price: ${{security.purchase_price}}</small>
+              </div>
+              <div class = "card-footer">
+                <small class="card-text">Purchased On: {{security.date_of_purchase}}</small>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock profile_content %}

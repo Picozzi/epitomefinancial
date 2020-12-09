@@ -1,0 +1,22 @@
+{% extends "portfolio_viewer/profile_base.html" %}
+{% load static %}
+
+{% block profile_content %}
+        <div class = "account-page">
+          <h3>Account Detail</h3>      
+          <div class = "pt-3">
+            <div class="card" style= "width:50%">
+              <h5 class="card-header">{{object.name}}</h5>
+                <div class="card-body">
+                  <h5 class="card-title">{{object.brokerage}}</h5>
+                  <p class="card-text" style = "margin: 10px 0">Account Type: {{object.account_type}}</p>
+                  <p class="card-text" style = "margin: 10px 0">Cash Balance: ${{object.cash_balance}}</p>
+                  {% if object.owner == user %}
+                    <a class = "btn btn-secondary btn-sm mt-1 mb-1" href = "{% url 'account_update' object.id %}">Update</a>
+                    <a class = "btn btn-danger btn-sm mt-1 mb-1" href = "{% url 'account_delete' object.id %}">Delete</a>
+                  {% endif %}
+                </div>
+            </div>
+          </div>
+        </div>        
+{% endblock profile_content %}

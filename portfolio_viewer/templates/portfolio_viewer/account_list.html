@@ -1,0 +1,25 @@
+{% extends "portfolio_viewer/profile_base.html" %}
+{% load static %}
+
+{% block profile_content %}
+  
+  <div class = "account-page">
+    <h3>Your Accounts</h3>
+    <a class = "btn btn-secondary btn-sm mt-1 mb-1" href = "{% url 'account_create' %}">Create A New Financial Account</a> 
+
+    {% for account in accounts %}
+    <div class = "pt-3">
+      <div class="card" style= "width:50%">
+        <h5 class="card-header">{{account.name}}</h5>
+          <div class="card-body">
+            <h5 class="card-title">{{account.brokerage}}</h5>
+            <p class="card-text" style = "margin: 10px 0">Account Type: {{account.account_type}}</p>
+            <p class="card-text" style = "margin: 10px 0">Cash Balance: ${{account.cash_balance}}</p>
+            <a href="{% url 'account_detail' account.id %}" class="btn btn-primary">See Details</a>
+          </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{% endblock profile_content %}

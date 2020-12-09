@@ -1,0 +1,283 @@
+{% extends "portfolio_viewer/base.html" %}
+{% load static %}
+
+    {% block dashboard_header_content %}
+
+    <!-- Chart.JS CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+   
+    <!-- Data Tables CDN -->
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.bootstrap4.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+        <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.colVis.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.bootstrap4.min.css">
+
+    {% endblock dashboard_header_content %}
+
+    {% block content %}
+        
+        <div class = "dashboard-grid">
+            <div class = "card1 dashboard-card">
+            {% if PerformanceTodayNum < 0 %}
+                <div class="card bg-danger">
+            {% else %}
+                <div class="card bg-success">
+            {% endif %}
+                    <div class ="card-body">
+                        <h3 class="card-title text-left">${{PerformanceTodayNum}}</h3>
+                        <h4 class="card-title text-right">{{PerformanceTodayPercent}}%</h4>
+                        <h6 class="card-title text-left  font-weight-light">Performance Today</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "card2 dashboard-card">
+            {% if OverallReturnNum < 0 %}
+                <div class="card bg-danger">
+            {% else %}
+                <div class="card bg-success">
+            {% endif %}                    
+                    <div class ="card-body">
+                        <h3 class="card-title text-left">${{OverallReturnNum}}</h3>
+                        <h4 class="card-title text-right">{{OverallReturnPercent}}%</h4>
+                        <h6 class="card-title text-left font-weight-light">Overall Return</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "card3 dashboard-card">
+            {% if PortfolioCost < 0 %}
+                <div class="card bg-danger" style="height: 100%;">
+            {% else %}
+                <div class="card bg-success" style="height: 100%;">
+            {% endif %}                    
+                    <div class ="card-body">
+                        <h3 class="card-title text-left">${{PortfolioCost}}</h3>
+                        <h6 class="card-title text-right font-weight-light">Portfolio Cost</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "card4 dashboard-card">
+            {% if PortfolioValue < 0 %}
+                <div class="card bg-danger" style="height: 100%;">
+            {% else %}
+                <div class="card bg-success" style="height: 100%;">
+            {% endif %}
+                    <div class ="card-body">
+                        <h3 class="card-title text-left">${{PortfolioValue}}</h3>
+                        <h6 class="card-title text-right font-weight-light">Portfolio Value</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "chart1">
+
+                <section>
+                    <form action="{% url 'dashboard' %}" class="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input dataset" type="radio" name="dataset" id="dataset_a" value="1m" checked>
+                            <label class="form-check-label text-muted" for="dataset_a">
+                                1M
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input dataset" type="radio" name="dataset" id="dataset_b" value="3m">
+                            <label class="form-check-label text-muted" for="dataset_b">
+                                3M
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input dataset" type="radio" name="dataset" id="dataset_c" value="6m">
+                            <label class="form-check-label text-muted" for="dataset_c">
+                                6M
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input dataset" type="radio" name="dataset" id="dataset_d" value="ytd">
+                            <label class="form-check-label text-muted" for="dataset_d">
+                                YTD
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input dataset" type="radio" name="dataset" id="dataset_e" value="1y">
+                            <label class="form-check-label text-muted" for="dataset_e">
+                                1Y
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input dataset" type="radio" name="dataset" id="dataset_f" value="5Y">
+                            <label class="form-check-label text-muted" for="dataset_f">
+                                5Y
+                            </label>
+                        </div>
+                        
+                    </form>
+                </section>
+                
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <div class = "chart2">
+                <canvas id="SectorChart"></canvas>
+            </div>
+
+            <div class = "dashboard-table">
+                 {{MainTable|safe}}
+            </div>
+
+        </div>
+
+    {% endblock content %}
+
+    {% block scripts %}
+        <script>
+        $(document).ready(function() {
+        var table = $('#main_table').DataTable( {
+            lengthChange: false,
+            buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+        } );
+    
+        table.buttons().container()
+            .appendTo( '#main_table_wrapper .col-md-6:eq(0)' );
+        } );
+        </script>
+
+        <script>
+            document.body.addEventListener('click', function(event) {
+                if(event.target.className == 'form-check-input dataset') {
+                    const form = event.target.form;
+                    const data = new FormData(form);
+
+                    const request = new XMLHttpRequest();
+                    request.open(form.method, form.action, true);
+                    request.send(data)
+
+                    request.addEventListener('load', function() {
+                        if(this.readyState == 4 && this.status == 200) {
+                            const response = JSON.parse(this.responseText);
+
+                            const colour_value = response.PortViewCol;
+                            const data_value = response.data_arr;
+                            const date_value = response.date_val;
+                            const tic = response.tickers;
+
+                            chart_1.data.datasets.length = 0;
+
+                            for (x in data_value)
+                            {
+                                var newDataset = {
+                                    label: tic[x],
+                                    data: data_value[x],
+                                    backgroundColor: colour_value[x],
+                                    borderColor: colour_value[x],
+                                    pointBorderColor: colour_value[x],
+                                    pointBackgroundColor: colour_value[x],
+                                    pointHoverBackgroundColor: colour_value[x],
+                                    pointHoverBorderColor: colour_value[x],
+                                    pointBorderWidth: 1,
+                                }
+                                chart_1.data.datasets.push(newDataset);
+                            }
+                            chart_1.data.labels = date_value;
+                            chart_1.update();
+                        }
+                    });
+                }
+            });
+        </script>
+
+        <script>
+            var SectorPieLabels = {{SectorPieLabels | safe}};
+            var SectorPieColours = {{SectorPieColours | safe}};
+            var SectorPieData = {{ SectorPieData|safe }};
+        </script>
+
+        <script>
+            var default_date_val = {{default_date_val | safe}};
+            var default_data_arr = {{default_data_arr | safe}};
+            var default_PortViewCol = {{ default_PortViewCol|safe }};
+            var default_tickers = {{ default_tickers|safe }};
+
+        </script>
+
+        <script type="text/javascript">
+            var ctx_2 = document.getElementById('SectorChart').getContext('2d');
+            var chart_2 = new Chart(ctx_2, {
+                type: 'pie',
+                data: {
+                    labels: SectorPieLabels,
+                    datasets: [{
+                    label: "Population",
+                    backgroundColor: SectorPieColours,
+                    data: SectorPieData,
+                }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Sector Breakdown of Portfolio'
+                    }
+                }
+            });
+        </script>
+
+        <script>
+            var ctx_1 = document.getElementById('myChart').getContext('2d');
+            var chart_1 = new Chart(ctx_1, {
+            type: 'line',
+            data: {
+                    labels: default_date_val,
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Portfolio Value'
+                    },
+                scales: {
+                    yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Portfolio Value in $'
+                    },
+                    stacked: true
+                    }],
+                }
+                }
+            });
+
+            for (x in default_data_arr)
+                {
+                    var newDataset = {
+                        label: default_tickers[x],
+                        data: default_data_arr[x],
+                        backgroundColor: default_PortViewCol[x],
+                        borderColor: default_PortViewCol[x],
+                        pointBorderColor: default_PortViewCol[x],
+                        pointBackgroundColor: default_PortViewCol[x],
+                        pointHoverBackgroundColor: default_PortViewCol[x],
+                        pointHoverBorderColor: default_PortViewCol[x],
+                        pointBorderWidth: 1,
+                    }
+                    chart_1.data.datasets.push(newDataset);
+                }
+                chart_1.update();
+        </script>
+    {% endblock scripts %}
+

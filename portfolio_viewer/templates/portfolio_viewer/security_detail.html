@@ -1,0 +1,23 @@
+{% extends "portfolio_viewer/profile_base.html" %}
+{% load static %}
+
+{% block profile_content %}
+        <div class = "security-page">
+          <h3>Security Detail</h3>      
+          <div class = "pt-3">
+            <div class="card" style= "width:50%">
+              <h5 class="card-header">{{object.name}} <span class="badge bg-primary" style= "color:white">{{object.ticker_symbol}}</span></h5>
+                <div class="card-body">
+                  <h5 class="card-title">{{object.security_type}}</h5>
+                  <p class="card-text" style = "margin: 10px 0">Number of Shares: {{object.num_shares}}</p>
+                  <p class="card-text" style = "margin: 10px 0">Purchase Price: ${{object.purchase_price}}</p>
+                  <small class="card-text">Purchased On: {{object.date_of_purchase}}</small>
+                  {% if object.account.owner == user %}
+                    <a class = "btn btn-secondary btn-sm mt-1 mb-1" href = "{% url 'security_update' object.id %}">Update</a>
+                    <a class = "btn btn-danger btn-sm mt-1 mb-1" href = "{% url 'security_delete' object.id %}">Delete</a>
+                  {% endif %}
+                </div>
+            </div>
+          </div>
+        </div>        
+{% endblock profile_content %}

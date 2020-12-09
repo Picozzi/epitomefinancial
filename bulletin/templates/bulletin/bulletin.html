@@ -1,0 +1,63 @@
+{% extends "portfolio_viewer/base.html" %}
+{% load static %}
+
+{% block content %}
+
+  <div class="bulletin-page">
+    <div class="bulletin-header bg-dark">
+      <h1>Epitome Financial - Bulletin Board</h1>
+    </div>
+    <a class = "btn btn-secondary btn-sm mt-3 mb-3" href = "{% url 'bulletin_create' %}">Create</a>
+
+    <div class="row mb-4">
+      <div class="leftcolumn">
+
+        {% for article in articles %}
+
+        <a href="{% url 'bulletin_detail' article.id %}" class="list-group-item list-group-item-action p-0" style="border-radius: 5px;">
+
+          <div class="card-article card">
+            <h2>{{article.title}}</h2>
+            <h5>{{article.author}} <span class="badge badge-pill badge-info">{{ article.date_posted|date:"F d, Y" }}</span></h5>
+            <img class="card-img" src={{article.article_image.url}}>            
+            <p class = "article-p text-muted">{{article.main_story}}</p>
+          </div>
+      
+        </a>
+        {% endfor %}
+      </div>
+      <div class="rightcolumn">
+        <!-- THIS WILL BE FOR ANNOUNCEMENTS IN A LATER RELEASE -->
+      </div>
+    </div>
+  
+    {% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+            <a class = "btn btn-outline-info mb-4" href ="?page=1">First</a>
+            <a class = "btn btn-outline-info mb-4" href ="?page={{page_obj.previous_page_number}}">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+
+        {% if page_obj.number == num %}
+            <a class = "btn btn-info mb-4" href ="?page={{num}}">{{num}}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a class = "btn btn-outline-info mb-4" href ="?page={{num}}">{{num}}</a>
+        {% endif %}
+
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <a class = "btn btn-outline-info mb-4" href ="?page={{page_obj.next_page_number}}">Next</a>
+        <a class = "btn btn-outline-info mb-4" href ="?page={{page_obj.paginator.num_pages}}">Last</a>
+        {% endif %}
+
+    {% endif %}
+  </div>
+
+
+
+
+
+{% endblock content %}

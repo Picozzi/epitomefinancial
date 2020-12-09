@@ -1,0 +1,36 @@
+{% extends "portfolio_viewer/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+    <div class="sidenav bg-dark mt-5">
+        <a id ="personalprofilenav" href="{% url 'profile' %}">Personal </a>
+        <a id ="accountprofilenav" href="{% url 'account_list' %}">Accounts</a>
+        <a id ="securityprofilenav" href="{% url 'security_list' %}">Securities</a>
+    </div>
+
+    {% block profile_content %}
+    {% endblock profile_content %}
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+<script>
+    $(function() {
+    var loc = window.location.href; 
+    if(/profile/.test(loc)) {
+    $('#personalprofilenav').addClass('active1');
+    }
+    else if(/account/.test(loc)) {
+    $('#accountprofilenav').addClass('active1');
+    }
+    else if(/security/.test(loc)) {
+    $('#securityprofilenav').addClass('active1');
+    }
+    });
+</script>
+
+{% endblock scripts %}

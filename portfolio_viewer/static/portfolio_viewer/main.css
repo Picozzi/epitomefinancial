@@ -1,0 +1,209 @@
+body {
+      margin-top: 3rem;
+  }
+
+.homepage{
+  background: black;
+}
+
+.home-titles
+{
+  margin-top: 8em;
+  margin-bottom: 8em;
+
+  padding: 6em;
+  text-align: center;
+  background: #2D936C!important;
+  color: white;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+.register{
+  padding-top: 2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.logout{
+  padding-top: 2rem;
+  display: block;
+  margin-left: 2rem;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.dashboard-card
+{
+  margin: 0.5rem;
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.card1 {
+  grid-area: card1;
+}
+.card2 {
+  grid-area: card2;
+}
+.card3 {
+  grid-area: card3;
+}
+.card4 {
+  grid-area: card4;
+}
+.chart1 {
+  grid-area: chart1;
+}
+.chart2 {
+  grid-area: chart2;
+}
+
+.dashboard-table {
+  padding-top: 3rem;
+  grid-area: table;
+}
+
+.dashboard-grid {
+  width: 100%;
+  display: grid;
+  padding: 5rem 2rem 2rem 2rem;
+  row-gap: 1.2rem;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "card1 card2 card3 card4"
+    "chart1 chart1 chart2 chart2"
+    "table table table table";
+}
+
+.profile {
+  padding-top: 3em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.profile-pics
+{
+  text-align: center;
+  padding-bottom: 2em;
+}
+
+.sidenav {
+			height:100%;
+			width:160px;
+			position: fixed;
+			z-index:1;
+			top:0;
+			left:0;
+			background-color:#111;
+			overflow-x: hidden;
+			padding-top: 20px;
+		}
+ 
+.sidenav a {
+			padding:6px 8px 6px 16px;
+			text-decoration: none;
+			font-size:25px;
+			color: #818181;
+			display:block;
+		}
+ 
+.sidenav a:hover{
+			color:#f1f1f1;
+    }	
+    
+.active1{
+      color:#f1f1f1!important;
+}
+
+/* ACCOUNT and Security */
+
+.account-page
+{
+  padding-top: 1rem;
+  padding-left: 12rem;
+  padding-bottom: 1rem;
+}
+
+.security-page
+{
+  padding-top: 1rem;
+  padding-left: 12rem;
+  padding-bottom: 1rem;
+}
+
+/*  Bulletin */
+
+.bulletin-page
+{
+  padding-top: 1rem;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-bottom: 1rem;
+}
+
+.bulletin-header
+{
+  padding: 1em;
+  text-align: center;
+  color: white;
+
+}
+
+.leftcolumn {
+  float: left;
+  width: 75%;
+}
+
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+
+.card-article {
+  background-color: transparent;
+  border-radius: 0px!important;
+  border-color: transparent;
+  margin: 1em;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.card-img {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+.article-p {
+  padding-top: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}
+

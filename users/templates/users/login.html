@@ -1,0 +1,29 @@
+{% extends "portfolio_viewer/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="register">
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Login Here</legend>
+                    {{form|crispy}}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Login</button>
+                </div>
+            </form>
+            <div class = "border-top pt-3">
+                <small class="text-muted">Don't Have An Account?
+                    <a class = "ml-2" href="{% url 'register' %}">Join Here</a>
+                </small>
+                <br>
+                <small class="text-muted">Forgot Your Password?
+                    <a class = "ml-2" href="{% url 'password_reset' %}">Reset it Here</a>
+                </small>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
