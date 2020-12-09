@@ -5,7 +5,7 @@ from random import randint
 from django.db.models import Q
 from .models import Account
 api_key = os.environ.get('IEX_API_KEYS')
-TEST_OR_PROD = 'sandbox'
+TEST_OR_PROD = 'cloud'
 
 def make_position_request(tickers):
 
