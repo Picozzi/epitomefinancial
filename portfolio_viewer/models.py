@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Account(models.Model):
     
@@ -30,6 +31,9 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('account_detail', kwargs={'pk': self.pk})
+
 class Security(models.Model):
 
     SECURITY_CHOICE = (
@@ -50,3 +54,6 @@ class Security(models.Model):
 
     def __str__(self):
         return self.ticker_symbol
+
+    def get_absolute_url(self):
+        return reverse('security_detail', kwargs={'pk': self.pk}) 
