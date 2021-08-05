@@ -1,6 +1,6 @@
 # epitomefinancial
 
-Epitome Financial is a django web application designed to help better track all of your personal investments. It lists all of your investmnts in one place and provides various analytics to review.
+Epitome Financial is a django web application designed to help better track all of your personal investments. It lists all of your investments in one place and provides various analytics to review.
 
 ## Motivation
 
